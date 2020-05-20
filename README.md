@@ -1,16 +1,28 @@
 # flutter_streams
 
-A new Flutter project.
+É um projeto flutter para demonstrar como atualizar um único item numa lista usando Streams.
 
-## Getting Started
+Foi utilizado a API: https://jsonplaceholder.typicode.com/todos
 
-This project is a starting point for a Flutter application.
+Foi pego essas informações de Todos e alternando em um único item a tarefa completada como true ou false.
 
-A few resources to get you started if this is your first Flutter project:
+Como ficou a Stream:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Todo todo = snapshot.data[index];
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+StreamBuilder<Todo>(
+    initialData: todo,
+    stream: stream.where((todoStream) => todoStream.id == todo.id),
+    builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+    return ListTile(
+        title: Text(todo.title),
+        trailing: Switch(
+        onChanged: (bool value) {
+            snapshot.data.completed = value;
+            sink.add(snapshot.data);
+        },
+        value: todo.completed,
+        ),
+    );
+    },
+);

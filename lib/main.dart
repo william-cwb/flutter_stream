@@ -68,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             value: todo.completed,
                           ),
                         );
-                      });
+                      },);
                 },
               );
             }
